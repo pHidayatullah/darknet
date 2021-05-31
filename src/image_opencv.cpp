@@ -875,7 +875,7 @@ extern "C" void save_cv_jpg(mat_cv *img_src, const char *name)
 // ====================================================================
 // Draw Detection
 // ====================================================================
-extern "C" void draw_detections_cv_v3(mat_cv* mat, detection *dets, int num, float thresh, char **names, image **alphabet, int classes, int ext_output)
+extern "C" void draw_detections_cv_v3(mat_cv* mat, detection *dets, int num, float thresh, char **names, image **alphabet, int classes, int ext_output, float avg_fps)
 {
     try {
         cv::Mat *show_img = (cv::Mat*)mat;
@@ -999,10 +999,19 @@ extern "C" void draw_detections_cv_v3(mat_cv* mat, detection *dets, int num, flo
                     (float)left, (float)top, b.w*show_img->cols, b.h*show_img->rows);
                 else
                     printf("\n");
+                char fps[100];
+                char a_fps[100];
+                gcvt(avg_fps, 6, a_fps);
+
+                strcpy(fps, "FPS: ");
+                strcat(fps, a_fps);                
 
                 cv::rectangle(*show_img, pt_text_bg1, pt_text_bg2, color, width, 8, 0);
                 cv::rectangle(*show_img, pt_text_bg1, pt_text_bg2, color, CV_FILLED, 8, 0);    // filled
                 cv::Scalar black_color = CV_RGB(0, 0, 0);
+                cv::Scalar green_color = CV_RGB(51, 255, 51);
+
+                cv::putText(*show_img, fps, cv::Point(10, 20), cv::FONT_HERSHEY_SIMPLEX, font_size, green_color, 2 * font_size, CV_AA);
                 cv::putText(*show_img, labelstr, pt_text, cv::FONT_HERSHEY_COMPLEX_SMALL, font_size, black_color, 2 * font_size, CV_AA);
                 // cv::FONT_HERSHEY_COMPLEX_SMALL, cv::FONT_HERSHEY_SIMPLEX
             }

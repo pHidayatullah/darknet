@@ -9,6 +9,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument("--train", type=int, default=80, help="Percentage of train set")
 parser.add_argument("--validation", type=int, default=10, help="Percentage of validation set")
 parser.add_argument("--test", type=int, default=10, help="Percentage of test set")
+parser.add_argument("--folder", type=str, default="img", help="Folder that contain image")
 
 args = parser.parse_args()
 
@@ -56,8 +57,8 @@ if(total > 100):
 # Menghitung Jumlah Data
 count = 0
 list_id = []
-for file in os.listdir("img"):
-    if file.endswith(".jpg"):       
+for file in os.listdir(args.folder):
+    if ((file.endswith(".jpg")) or (file.endswith(".png"))):       
         list_id.append(count)
         count+=1
 
@@ -73,18 +74,18 @@ te.close()
 
 count = 0
 for file in os.listdir("img"):
-	if file.endswith(".jpg"):
+	if ((file.endswith(".jpg")) or (file.endswith(".png"))):
 		if(count in train):
 			f = open("train.txt", "a")
-			f.write("data/img/"+file+"\n")
+			f.write("data/"+args.folder+"/"+file+"\n")
 			f.close()
 		elif(count in valid):
 			f = open("valid.txt", "a")
-			f.write("data/img/"+file+"\n")
+			f.write("data/"+args.folder+"/"+file+"\n")
 			f.close()
 		else:
 			f = open("test.txt", "a")
-			f.write("data/img/"+file+"\n")
+			f.write("data/"+args.folder+"/"+file+"\n")
 			f.close()
 
 		count+=1

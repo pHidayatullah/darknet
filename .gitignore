@@ -17,7 +17,6 @@ opencv/
 convnet/
 decaf/
 submission/
-cfg/
 temp/
 build/darknet/*
 build_*/

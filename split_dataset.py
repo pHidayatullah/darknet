@@ -73,7 +73,7 @@ te = open("test.txt", "w")
 te.close()
 
 count = 0
-for file in os.listdir("img"):
+for file in os.listdir(args.folder):
 	if ((file.endswith(".jpg")) or (file.endswith(".png"))):
 		if(count in train):
 			f = open("train.txt", "a")

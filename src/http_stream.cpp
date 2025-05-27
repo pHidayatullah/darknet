@@ -508,7 +508,7 @@ public:
                 }
 
                 char head[400];
-                sprintf(head, "--mjpegstream\r\nContent-Type: image/jpeg\r\nContent-Length: %zu\r\n\r\n", outlen);
+                sprintf(head, "--mjpegstream\r\nContent-Type: image/jpeg\r\nContent-Length: %d\r\n\r\n", outlen);
                 _write(s, head, 0);
                 int n = _write(s, (char*)(&outbuf[0]), outlen);
                 cerr << "known client: " << s << ", sent = " << n << ", must be sent outlen = " << outlen << endl;
@@ -782,8 +782,7 @@ int check_prob(detection det, float thresh)
 int check_classes_id(detection det1, detection det2, float thresh)
 {
     if (det1.classes != det2.classes) {
-        printf(" Error: det1.classes != det2.classes \n");
-        getchar();
+        error("Error: det1.classes != det2.classes", DARKNET_LOC);
     }
 
     int det1_id = -1;
